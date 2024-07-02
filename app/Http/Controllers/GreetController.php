@@ -19,14 +19,14 @@ class GreetController extends Controller
 //            return response()->json(['error' => 'greeting failed'], 500);
 //        }
         $body = $response->json();
-        $latitude = $body['latitude'];
-        $longitude = $body['longitude'];
+//        $latitude = $body['latitude'];
+//        $longitude = $body['longitude'];
 //        $greeting = [
 //            'client_ip' => $request->ip(),
 ////            $request->
 //            'location' => $location,
 //            'greeting' => "Hello, {$request->visitor_name}!, the temperature is {$temp} degrees Celcius in {$location}"
 //        ];
-        return response()->json(['data' => $response]);
+        return response()->json(['data' => $body]);
     }
 }
