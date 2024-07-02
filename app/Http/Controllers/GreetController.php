@@ -13,21 +13,21 @@ class GreetController extends Controller
         $request->validate([
             'visitor_name' => 'required|string'
         ]);
-        $temp = 11;
-//        $response = Http::get("http://ip-api.com/json/{$request->ip()}");
+
         $response = Http::withHeader('key', config('app.weather_api_key'))->get("https://api.weatherapi.com/v1/current.json?q={$request->ip()}");
-//        if ($response->failed()) {
-//            return response()->json(['error' => 'greeting failed'], 500);
-//        }
+
+        if ($response->failed()) {
+            return response()->json(['error' => 'unable to generate greeting now'], 500);
+        }
+
         $body = $response->json();
-//        $latitude = $body['lat'];
-//        $longitude = $body['lon'];
-//        $greeting = [
-//            'client_ip' => $request->ip(),
-////            $request->
-//            'location' => $location,
-//            'greeting' => "Hello, {$request->visitor_name}!, the temperature is {$temp} degrees Celcius in {$location}"
-//        ];
-        return response()->json(['data' => $body]);
+        $location = $body['location']['name'];
+        $greeting = [
+            'client_ip' => $request->ip(),
+            'location' => $location,
+            'greeting' => "Hello, {$request->visitor_name}!, the temperature is {$body['current']['temp_c']} degrees Celcius in {$location}"
+        ];
+
+        return response()->json(['data' => $greeting]);
     }
 }
