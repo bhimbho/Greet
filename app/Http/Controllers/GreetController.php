@@ -15,7 +15,7 @@ class GreetController extends Controller
         ]);
         $temp = 11;
 //        $response = Http::get("http://ip-api.com/json/{$request->ip()}");
-        $response = Http::withHeader('key', config('app.weather_api_key'))->get("https://api.weatherapi.com/v1/q={$request->ip()}");
+        $response = Http::withHeader('key', config('app.weather_api_key'))->get("https://api.weatherapi.com/v1/current.json?q={$request->ip()}");
 //        if ($response->failed()) {
 //            return response()->json(['error' => 'greeting failed'], 500);
 //        }
