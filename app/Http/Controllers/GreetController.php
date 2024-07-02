@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
 class GreetController extends Controller
@@ -17,7 +18,7 @@ class GreetController extends Controller
         $response = Http::withHeader('key', config('app.weather_api_key'))->get("https://api.weatherapi.com/v1/current.json?q={$request->ip()}");
 
         if ($response->failed()) {
-            return response()->json(['error' => 'unable to generate greeting now'], 500);
+            return response()->json(['error' => 'unable to generate greeting now'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         $body = $response->json();
@@ -28,6 +29,6 @@ class GreetController extends Controller
             'greeting' => "Hello, {$request->visitor_name}!, the temperature is {$body['current']['temp_c']} degrees Celcius in {$location}"
         ];
 
-        return response()->json(['data' => $greeting]);
+        return response()->json([$greeting]);
     }
 }
