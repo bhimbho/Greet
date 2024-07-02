@@ -123,4 +123,9 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /**
+     * Weather Api
+     */
+
+    'weather_api_key' => env('WEATHER_API_KEY'),
 ];
