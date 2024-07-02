@@ -14,13 +14,13 @@ class GreetController extends Controller
             'visitor_name' => 'required|string'
         ]);
         $temp = 11;
-        $response = Http::get("http://ip-api.com/json/102.215.57.147");
-//        if ($response->failed()) {
-//            return response()->json(['error' => 'greeting failed'], 500);
-//        }
+        $response = Http::get("http://ip-api.com/json/{$request->ip()}");
+        if ($response->failed()) {
+            return response()->json(['error' => 'greeting failed'], 500);
+        }
         $body = $response->json();
-//        $latitude = $body['latitude'];
-//        $longitude = $body['longitude'];
+        $latitude = $body['lat'];
+        $longitude = $body['lon'];
 //        $greeting = [
 //            'client_ip' => $request->ip(),
 ////            $request->
